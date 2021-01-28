@@ -10,15 +10,19 @@ export default class King extends Piece {
         let location = board.findPiece(this);
         let row = location.row;
         let col = location.col;
-        return [
-            Square.at(row - 1, col - 1),
-            Square.at(row - 1, col),
-            Square.at(row - 1, col + 1),
-            Square.at(row, col - 1),
-            Square.at(row, col + 1),
-            Square.at(row + 1, col - 1),
-            Square.at(row + 1, col),
-            Square.at(row + 1, col + 1)
-        ]
+
+        let arr = [];
+
+        for (let i = row - 1; i < row + 2; i++) {
+            for (let j = col - 1; j < col + 2; j++) {
+                if (i == row && j == col) {
+                    continue;
+                } else {
+                    arr.push(Square.at(i, j));
+                }
+            }
+        }
+
+        return arr;
     }
 }
