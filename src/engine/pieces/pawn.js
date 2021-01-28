@@ -13,13 +13,7 @@ export default class Pawn extends Piece {
         
         // Find where our piece is. If the player is white, the pawn can move up a space
         // If the player is black, the pawn can move down a space
-        // let location = board.findPiece(this);
-        // if (this.player === Player.WHITE) {
-        //     return Square.at(location.row + 1, location.col)
-        // } else {
-        //     return Square.at(location.row - 1, location.col)
-        // }
-
+        // Additionally, if it is a pawn's first move, it may move up to 2 spaces
         let location = board.findPiece(this);
         if (this.player === Player.WHITE) {
             if (location.row == 2) {
