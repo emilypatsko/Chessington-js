@@ -8,6 +8,19 @@ export default class Pawn extends Piece {
         super(player);
     }
 
+    // squareInFrontEmpty(square) {
+    //     let row = square.row;
+    //     let col = square.col;
+
+    //     if (this.player === Player.WHITE) {
+    //         let squareInFront = Square.at(row + 1, col);
+    //     } else {
+    //         let squareInFront = Square.at(row - 1, col);
+    //     }
+
+    //     return (board.getPiece(squareInFront) === undefined);
+    // }
+
     getAvailableMoves(board) {
         // This method will return all moves that can be made by a pawn
         
@@ -15,36 +28,97 @@ export default class Pawn extends Piece {
         // If the player is black, the pawn can move down a space
         // Additionally, if it is a pawn's first move, it may move up to 2 spaces
         let location = board.findPiece(this);
-        // if (this.player === Player.WHITE) {
-        //     if (location.row == 2) {
-        //         return [Square.at(location.row + 1, location.col)]
-        //     } else if (location.row == 1) {
-        //         return [Square.at(location.row + 1, location.col), Square.at(location.row + 2, location.col)]
-        //     }
-        // } else {
-        //     if (location.row == 5) {
-        //         return [Square.at(location.row - 1, location.col)]
-        //     } else if (location.row == 6) {
-        //         return [Square.at(location.row - 1, location.col), Square.at(location.row - 2, location.col)]
-        //     }
-        // }
+        let row = location.row;
+        let col = location.col;
+        let arr = [];
 
         if (this.player === Player.WHITE) {
-            if (location.row == 1) {
-                return [Square.at(location.row + 1, location.col), Square.at(location.row + 2, location.col)]
-            } else if (location.row > 1 && location.row < 7) {
-                return [Square.at(location.row + 1, location.col)]
-            } else { 
-                return [];
+            if (row == 1) {
+
+                let squareInFront = Square.at(row + 1, col);
+                let pieceInFront = board.getPiece(squareInFront);
+
+                if (pieceInFront === undefined) {
+                    // want to do this only if there's an empty square in front
+                    arr.push(squareInFront);
+                    squareInFront = Square.at(row + 2, col);
+                    pieceInFront = board.getPiece(squareInFront);
+
+                    if (pieceInFront == undefined) {
+                        // only do this if the above is okay and there's an empty square in front
+                        arr.push(squareInFront);
+                    }
+                }                            
+            } else if (row > 1 && row < 7) {
+
+                let squareInFront = Square.at(row + 1, col);
+                let pieceInFront = board.getPiece(squareInFront);
+
+                if (pieceInFront === undefined) {
+                    // want to do this only if there's an empty square in front
+                    arr.push(squareInFront);
+                }
+            } 
+
+            // consider pieces diagonally in front that could be taken
+            if (row + 1 <= 7 && col - 1 >= 0) {
+                let pieceToLeft = board.getPiece(Square.at(row + 1, col - 1));
+                if (pieceToLeft !== undefined && pieceToLeft.player === Player.BLACK) {
+                    arr.push(Square.at(row + 1, col - 1));
+                }
             }
+
+            if (row + 1 <= 7 && col + 1 <= 7) {
+                let pieceToRight = board.getPiece(Square.at(row + 1, col + 1));
+                if (pieceToRight !== undefined && pieceToRight.player === Player.BLACK) {
+                    arr.push(Square.at(row + 1, col + 1));
+                }
+            }
+
         } else {
-            if (location.row == 6) {
-                return [Square.at(location.row - 1, location.col), Square.at(location.row - 2, location.col)]
-            } else if (location.row < 6 && location.row > 0) {
-                return [Square.at(location.row - 1, location.col)]
-            } else {
-                return [];
+            if (row == 6) {
+
+                let squareInFront = Square.at(row - 1, col);
+                let pieceInFront = board.getPiece(squareInFront);
+
+                if (pieceInFront == undefined) {
+                    // want to do this only if there's an empty square in front
+                    arr.push(squareInFront);
+                    squareInFront = Square.at(row - 2, col);
+                    pieceInFront = board.getPiece(squareInFront);
+
+                    if (pieceInFront == undefined) {
+                        // only do this if the above is okay and there's an empty square in front
+                        arr.push(squareInFront);
+                    }
+                }         
+            } else if (row < 6 && row > 0) {
+
+                let squareInFront = Square.at(row - 1, col);
+                let pieceInFront = board.getPiece(squareInFront);
+
+                if (pieceInFront == undefined) {
+                    // want to do this only if there's an empty square in front
+                    arr.push(squareInFront);
+                }
+            } 
+
+            // consider pieces diagonally in front that could be taken
+            if (row - 1 >= 0 && col + 1 <= 7) {
+                let pieceToLeft = board.getPiece(Square.at(row - 1, col + 1));
+                if (pieceToLeft !== undefined && pieceToLeft.player === Player.WHITE) {
+                    arr.push(Square.at(row - 1, col + 1));
+                }
+            }
+
+            if (row - 1 >= 0 && col - 1 >= 0) {
+                let pieceToRight = board.getPiece(Square.at(row - 1, col - 1));
+                if (pieceToRight !== undefined && pieceToRight.player === Player.WHITE) {
+                    arr.push(Square.at(row - 1, col - 1));
+                }
             }
         }
+
+        return arr;
     }
 }

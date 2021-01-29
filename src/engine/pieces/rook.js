@@ -25,6 +25,27 @@ export default class Rook extends Piece {
             }
         }
 
+        // moves to right
+        // let j = col;
+        // let squareToRight;
+        // let pieceToRight;
+        // while (board.getPiece(squareToRight) === undefined || pieceToRight.player == board.getPiece&& j < 7) {
+        //     j++;
+        //     squareToRight = Square.at(row, j);
+        //     arr.push(squareToRight);
+        // }
+
+        // pseudocode:
+        // while (the square to the right is on the board) {
+        //     if 
+        // }
+
+        // moves down
+
+        // moves to left
+
+        // moves up
+
         return arr;
     }
 }
