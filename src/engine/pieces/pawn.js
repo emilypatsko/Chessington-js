@@ -15,17 +15,35 @@ export default class Pawn extends Piece {
         // If the player is black, the pawn can move down a space
         // Additionally, if it is a pawn's first move, it may move up to 2 spaces
         let location = board.findPiece(this);
+        // if (this.player === Player.WHITE) {
+        //     if (location.row == 2) {
+        //         return [Square.at(location.row + 1, location.col)]
+        //     } else if (location.row == 1) {
+        //         return [Square.at(location.row + 1, location.col), Square.at(location.row + 2, location.col)]
+        //     }
+        // } else {
+        //     if (location.row == 5) {
+        //         return [Square.at(location.row - 1, location.col)]
+        //     } else if (location.row == 6) {
+        //         return [Square.at(location.row - 1, location.col), Square.at(location.row - 2, location.col)]
+        //     }
+        // }
+
         if (this.player === Player.WHITE) {
-            if (location.row == 2) {
-                return [Square.at(location.row + 1, location.col)]
-            } else if (location.row == 1) {
+            if (location.row == 1) {
                 return [Square.at(location.row + 1, location.col), Square.at(location.row + 2, location.col)]
+            } else if (location.row > 1 && location.row < 7) {
+                return [Square.at(location.row + 1, location.col)]
+            } else { 
+                return [];
             }
         } else {
-            if (location.row == 5) {
-                return [Square.at(location.row - 1, location.col)]
-            } else if (location.row == 6) {
+            if (location.row == 6) {
                 return [Square.at(location.row - 1, location.col), Square.at(location.row - 2, location.col)]
+            } else if (location.row < 6 && location.row > 0) {
+                return [Square.at(location.row - 1, location.col)]
+            } else {
+                return [];
             }
         }
     }

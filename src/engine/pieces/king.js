@@ -17,7 +17,7 @@ export default class King extends Piece {
             for (let j = col - 1; j < col + 2; j++) {
                 if (i == row && j == col) {
                     continue;
-                } else {
+                } else if (i >= 0 && i <= 7 && j >= 0 && j <= 7) {
                     arr.push(Square.at(i, j));
                 }
             }
